@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.xiaomi.dao.IShoppingCartDao">
+    <select id="getShoppingCartList" resultType="com.example.xiaomi.view.ShoppingCartListView">
+        select s.*, p.product_id, p.product_name, p.product_picture, p.product_selling_price
+        from shoppingcart s
+                 left join products p
+                           on s.product_id = p.product_id
+    </select>
+</mapper>

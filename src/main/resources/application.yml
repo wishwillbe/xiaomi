@@ -1,0 +1,32 @@
+# 也是springboot的配置文件，两个都可以用
+server:
+  port: 1089
+  servlet:
+    context-path: /xiaomi
+
+# 配置数据源
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/xiaomishopping?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false
+    #    url: jdbc:mysql://localhost:3306/xiaomi?userSSL=false&erverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+
+## 配置mybatis
+#mybatis:
+#  # mapper配置文件
+#  mapper-locations: classpath:mapper/*.xml
+#  # resultType别名，没有这个配置resultType包名要写全，配置后只要写类名
+#  type-aliases-package: com.springboot.mybatistest.entity
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.log4j.Log4jImpl
+
+mybatis-plus:
+  # mapper配置文件
+  mapper-locations: classpath:mapper/*.xml
+  # resultType别名，没有这个配置resultType包名要写全，配置后只要写类名
+  type-aliases-package: com.example.xiaomi.entity,com.example.xiaomi.vo
+  configuration:
+    # 日志的配置，直接添加即可，内部有自带配置项
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

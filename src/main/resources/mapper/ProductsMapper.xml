@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.xiaomi.dao.IProductsDao">
+    <resultMap id="productsHotMap" type="com.example.xiaomi.view.ProductsHotView">
+        <id property="categoryId" column="category_id"></id>
+        <result property="categoryName" column="category_name"></result>
+        <result property="categoryPicture1" column="category_picture1"></result>
+        <result property="categoryPicture2" column="category_picture2"></result>
+        <collection property="products" ofType="com.example.xiaomi.entity.Products">
+            <id property="productId" column="product_id"></id>
+            <result property="productIntro" column="product_intro"></result>
+            <result property="productName" column="product_name"></result>
+            <result property="productPicture" column="product_picture"></result>
+            <result property="productPrice" column="product_price"></result>
+            <result property="productSellingPrice" column="product-selling_price"></result>
+            <result property="productTitle" column="product_title"></result>
+        </collection>
+    </resultMap>
+
+    <resultMap id="productsMoreMap" type="com.example.xiaomi.view.ProductsMoreView">
+        <id property="categoryId" column="category_id"></id>
+        <id property="productId" column="product_id"></id>
+        <result property="categoryName" column="category_name"></result>
+        <result property="isCollect" column="is_collect"></result>
+        <result property="productIntro" column="product_intro"></result>
+        <result property="productName" column="product_name"></result>
+        <result property="productPicture" column="product_picture"></result>
+        <result property="productPrice" column="product_price"></result>
+        <result property="productSellingPrice" column="product-selling_price"></result>
+        <result property="productTitle" column="product_title"></result>
+        <collection property="pictures" ofType="com.example.xiaomi.entity.Pictures">
+            <id property="pictureId" column="picture_id"></id>
+            <id property="productId" column="product_id"></id>
+            <result property="intro" column="intro"></result>
+            <result property="productPicture" column="product_picture"></result>
+        </collection>
+    </resultMap>
+
+    <!--查询商品列表-->
+    <select id="getProductList" resultType="com.example.xiaomi.view.ProductsView">
+        select p.*, c.category_name
+        from products p
+                 left join category c
+                           on p.category_id = c.category_id
+    </select>
+
+    <!-- 查询热门商品 -->
+    <select id="getProductHot" resultMap="productsHotMap">
+        select p.*, c.category_name, c.category_picture1, category_picture2
+        from products p
+                 left join category c
+                           on p.category_id = c.category_id
+        where c.category_id in ('1', '2', '3')
+    </select>
+
+    <!-- 查询商品详情 -->
+    <select id="getProductMore" resultMap="productsMoreMap">
+        select p.*, pi.*
+        from products p
+                 left join pictures pi
+                           on p.product_id = pi.product_id
+    </select>
+</mapper>
